@@ -89,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return Material(
+        child: Container(
         decoration: kBackgroundConfig,
         child: KeyboardAvoider(
           autoScroll: true,

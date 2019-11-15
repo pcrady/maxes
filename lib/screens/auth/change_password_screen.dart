@@ -32,8 +32,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Container(
+    return  Material(
+      child: Container(
         decoration: kBackgroundConfig,
         child: KeyboardAvoider(
           autoScroll: true,
