@@ -7,9 +7,16 @@ class AuthTextInput extends StatelessWidget {
   bool obscureText;
   Function callback;
   TextEditingController controller;
+  TextInputType keyboardType;
 
-  AuthTextInput(
-      {this.hintText, this.faIcon, this.callback, this.controller, this.obscureText: false});
+  AuthTextInput({
+    this.hintText,
+    this.faIcon,
+    this.callback,
+    this.controller,
+    this.obscureText: false,
+    this.keyboardType: TextInputType.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +26,7 @@ class AuthTextInput extends StatelessWidget {
         boxShadow: [kBoxShadow],
       ),
       child: TextField(
+        keyboardType: keyboardType,
         controller: controller,
         onChanged: (value) {
           callback(value);

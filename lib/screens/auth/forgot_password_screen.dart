@@ -78,6 +78,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ? emailCallback
                       : confirmationCodeCallback,
                   controller: _controller,
+                  keyboardType: _screenVersion == ForgotScreenVersion.enterEmail
+                      ? TextInputType.emailAddress
+                      : TextInputType.number,
                 ),
                 _screenVersion == ForgotScreenVersion.enterEmail
                     ? Container()

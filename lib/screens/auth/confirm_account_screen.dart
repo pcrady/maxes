@@ -76,6 +76,7 @@ class _ConfirmAccountScreenState extends State<ConfirmAccountScreen> {
                   hintText: 'Confirmation Code',
                   faIcon: FontAwesomeIcons.key,
                   callback: confirmCodeCallback,
+                  keyboardType: TextInputType.number,
                 ),
                 SizedBox(height: 15.0),
                 AuthButton(

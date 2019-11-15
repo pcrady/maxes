@@ -104,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   hintText: 'Email',
                   faIcon: FontAwesomeIcons.envelope,
                   callback: emailCallback,
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 15.0),
                 AuthTextInput(
