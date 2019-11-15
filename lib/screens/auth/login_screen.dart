@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:maxes/widgets/error_dialog.dart';
 import 'package:maxes/screens/home_screen.dart';
 import 'package:maxes/screens/auth/confirm_account_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 enum AuthScreenVersion {
   login,
@@ -44,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginCallback() async {
     try {
+      if (_email == null || _password == null) return;
+
       // Call init with email before logging in
       await Provider.of<Auth>(context).init(email: _email);
       await Provider.of<Auth>(context).authenticateUser(_password);
@@ -67,6 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void signUpCallback() async {
+    if (_email == null || _password == null || _confirmPassword == null) return;
+
     if (_password == _confirmPassword) {
       try {
         // call init with email before registering

@@ -34,6 +34,7 @@ class _ConfirmAccountScreenState extends State<ConfirmAccountScreen> {
 
   void confirmCallback() async {
     try {
+      if (_confirmationCode == null || widget.password == null) return;
       await Provider.of<Auth>(context).confirmUser(_confirmationCode);
       await Provider.of<Auth>(context).authenticateUser(widget.password);
       await Provider.of<Auth>(context).getCognitoCredentials();

@@ -101,6 +101,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   buttonColor: kButtonColor,
                   onPressed: () async {
                     if (_screenVersion == ForgotScreenVersion.enterEmail) {
+                      if (_email == null) return;
                       try {
                         await Provider.of<Auth>(context).init(email: _email);
                         await Provider.of<Auth>(context).sendForgotPasswordCode();
@@ -113,6 +114,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       }
                     } else {
                       try {
+                        if (_email == null || _confirmationCode == null || _newPassword == null) return;
                         await Provider.of<Auth>(context).init(email: _email);
                         await Provider.of<Auth>(context)
                             .confirmForgotPasswordCode(

@@ -72,6 +72,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   buttonText: 'CHANGE PASSWORD',
                   buttonColor: kButtonColor,
                   onPressed: () async {
+                    if (_oldPassword == null || _newPassword == null) return;
                     try {
                       await Provider.of<Auth>(context).changePassword(_oldPassword, _newPassword);
                       Navigator.pushReplacementNamed(context, HomeScreen.routeName);

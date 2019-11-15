@@ -182,7 +182,7 @@ class Auth with ChangeNotifier {
 
   Future<void> signOut() async {
     try {
-      await _cognitoUser.globalSignOut();
+      await _cognitoUser.signOut();
       // delete the credentials from memory
       _credentials = null;
       notifyListeners();
