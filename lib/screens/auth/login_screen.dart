@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:maxes/widgets/error_dialog.dart';
 import 'package:maxes/screens/home_screen.dart';
 import 'package:maxes/screens/auth/confirm_account_screen.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 enum AuthScreenVersion {
   login,
