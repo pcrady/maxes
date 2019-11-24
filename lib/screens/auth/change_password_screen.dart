@@ -32,7 +32,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Material(
+    return Material(
       child: Container(
         decoration: kBackgroundConfig,
         child: KeyboardAvoider(
@@ -77,7 +77,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       await Provider.of<Auth>(context).changePassword(_oldPassword, _newPassword);
                       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
                     } catch (e) {
-                      _showErrorDialog(e.message);
+                      _showErrorDialog(e.toString());
                     }
                   },
                 ),

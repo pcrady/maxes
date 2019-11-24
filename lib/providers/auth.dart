@@ -4,6 +4,8 @@ import 'package:amazon_cognito_identity_dart/cognito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import '../secrets.dart';
+
 class Storage extends CognitoStorage {
   SharedPreferences _prefs;
   Storage(this._prefs);
@@ -54,9 +56,9 @@ class Auth with ChangeNotifier {
   CognitoUserSession _session;
 
   Auth() {
-    _userPoolName = kSecrets['cognitoUserPool'];
-    _identityPoolName = kSecrets['cognitoIdentityPool'];
-    _clientId = kSecrets['cognitoClientId'];
+    _userPoolName = Secrets.cognitoUserPool;
+    _identityPoolName = Secrets.cognitoIdentityPool;
+    _clientId = Secrets.cognitoClientId;
   }
 
   Future<void> init({String email}) async {
@@ -64,13 +66,11 @@ class Auth with ChangeNotifier {
       _email = email;
       _prefs = await SharedPreferences.getInstance();
       _customStore = Storage(_prefs);
-      _cognitoUserPool =
-          CognitoUserPool(_userPoolName, _clientId, storage: _customStore);
+      _cognitoUserPool = CognitoUserPool(_userPoolName, _clientId, storage: _customStore);
       _cognitoUser = await _cognitoUserPool.getCurrentUser();
 
       if (_cognitoUser == null && _email != null) {
-        _cognitoUser =
-            CognitoUser(_email, _cognitoUserPool, storage: _customStore);
+        _cognitoUser = CognitoUser(_email, _cognitoUserPool, storage: _customStore);
       }
 
       if (_cognitoUser != null) {
@@ -91,8 +91,7 @@ class Auth with ChangeNotifier {
           value: _email,
         ),
       ];
-      await _cognitoUserPool.signUp(_email, password,
-          userAttributes: userAttributes);
+      await _cognitoUserPool.signUp(_email, password, userAttributes: userAttributes);
     } catch (e) {
       throw e;
     }
@@ -115,8 +114,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> authenticateUser(String password) async {
-    final authDetails =
-        AuthenticationDetails(username: _email, password: password);
+    final authDetails = AuthenticationDetails(username: _email, password: password);
     try {
       await _cognitoUser.authenticateUser(authDetails);
     } catch (e) {

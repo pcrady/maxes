@@ -32,33 +32,33 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Text(
               _serverText,
-             textAlign: TextAlign.center,
-             style: kBigTextStyle,
+              textAlign: TextAlign.center,
+              style: kBigTextStyle,
             ),
             SizedBox(height: 15.0),
             AuthButton(
               buttonText: 'GET DATA FROM SERVER',
               buttonColor: Color(0xffff1ba9),
               onPressed: () async {
-                CognitoCredentials credentials = await Provider.of<Auth>(context).getCognitoCredentials();
-
-                final awsSigV4Client = AwsSigV4Client(
-                  credentials.accessKeyId,
-                  credentials.secretAccessKey,
-                  kSecrets['apiGatewayEndpoint'],
-                  sessionToken: credentials.sessionToken,
-                  region: kSecrets['region'],
-                );
-
-                final signedRequest = SigV4Request(
-                  awsSigV4Client,
-                  method: 'GET',
-                  path: '/test',
-                );
-
                 http.Response response;
 
                 try {
+                  CognitoCredentials credentials = await Provider.of<Auth>(context).getCognitoCredentials();
+
+                  final awsSigV4Client = AwsSigV4Client(
+                    credentials.accessKeyId,
+                    credentials.secretAccessKey,
+                    Secrets.apiGatewayEndpoint,
+                    sessionToken: credentials.sessionToken,
+                    region: Secrets.region,
+                  );
+
+                  final signedRequest = SigV4Request(
+                    awsSigV4Client,
+                    method: 'GET',
+                    path: '/test',
+                  );
+
                   response = await http.get(
                     signedRequest.url,
                     headers: signedRequest.headers,
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 } catch (e) {
                   showDialog(
                     context: context,
-                    builder: (ctx) => ErrorDialog(message: e.message),
+                    builder: (ctx) => ErrorDialog(message: e.toString()),
                   );
                 }
                 setState(() {
@@ -89,12 +89,11 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () async {
                 try {
                   await Provider.of<Auth>(context).signOut();
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      LoginScreen.routeName, (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.routeName, (Route<dynamic> route) => false);
                 } catch (e) {
                   showDialog(
                     context: context,
-                    builder: (ctx) => ErrorDialog(message: e.message),
+                    builder: (ctx) => ErrorDialog(message: e.toString()),
                   );
                 }
               },

@@ -9,10 +9,10 @@ class LoadingScreen extends StatelessWidget {
         padding: EdgeInsets.all(30),
         decoration: kBackgroundConfig,
         child: Center(
-            child: Text(
-              'Loading',
-              style: kBigTextStyle,
-            )
+          child: Text(
+            'Loading',
+            style: kBigTextStyle,
+          ),
         ),
       ),
     );

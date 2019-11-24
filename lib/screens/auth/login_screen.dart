@@ -52,18 +52,22 @@ class _LoginScreenState extends State<LoginScreen> {
       await Provider.of<Auth>(context).getCognitoCredentials();
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     } catch (e) {
-      if (e.code == 'UserNotConfirmedException') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ConfirmAccountScreen(
-              email: _email,
-              password: _password,
+      try {
+        if (e.code == 'UserNotConfirmedException') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConfirmAccountScreen(
+                email: _email,
+                password: _password,
+              ),
             ),
-          ),
-        );
-      } else {
-        _showErrorDialog(e.message);
+          );
+        } else {
+          _showErrorDialog(e.toString());
+        }
+      } catch (e) {
+        _showErrorDialog(e.toString());
       }
     }
   }
@@ -86,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       } catch (e) {
-        _showErrorDialog(e.message);
+        _showErrorDialog(e.toString());
       }
     }
   }
@@ -94,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Material(
-        child: Container(
+      child: Container(
         decoration: kBackgroundConfig,
         child: KeyboardAvoider(
           autoScroll: true,
@@ -126,17 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         callback: confirmPasswordCallback,
                         obscureText: true,
                       ),
-                screenVersion == AuthScreenVersion.login
-                    ? Container()
-                    : SizedBox(height: 15.0),
+                screenVersion == AuthScreenVersion.login ? Container() : SizedBox(height: 15.0),
                 AuthButton(
-                  buttonText: screenVersion == AuthScreenVersion.login
-                      ? 'LOGIN'
-                      : 'SIGN UP',
+                  buttonText: screenVersion == AuthScreenVersion.login ? 'LOGIN' : 'SIGN UP',
                   buttonColor: kButtonColor,
-                  onPressed: screenVersion == AuthScreenVersion.login
-                      ? loginCallback
-                      : signUpCallback,
+                  onPressed: screenVersion == AuthScreenVersion.login ? loginCallback : signUpCallback,
                 ),
                 SizedBox(height: 15.0),
                 Row(
@@ -148,22 +146,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         FocusScope.of(context).requestFocus(FocusNode());
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPasswordScreen()),
+                          MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
                         );
                       },
                     ),
                     SizedBox(width: 20.0),
                     FlatButton(
-                      child: screenVersion == AuthScreenVersion.login
-                          ? Text('Register Account')
-                          : Text('Login'),
+                      child: screenVersion == AuthScreenVersion.login ? Text('Register Account') : Text('Login'),
                       onPressed: () {
                         setState(() {
-                          screenVersion =
-                              screenVersion == AuthScreenVersion.login
-                                  ? AuthScreenVersion.signUp
-                                  : AuthScreenVersion.login;
+                          screenVersion = screenVersion == AuthScreenVersion.login
+                              ? AuthScreenVersion.signUp
+                              : AuthScreenVersion.login;
                         });
                       },
                     ),

@@ -22,7 +22,6 @@ class ConfirmAccountScreen extends StatefulWidget {
 }
 
 class _ConfirmAccountScreenState extends State<ConfirmAccountScreen> {
-
   String _confirmationCode;
 
   void _showErrorDialog(String message) {
@@ -40,7 +39,7 @@ class _ConfirmAccountScreenState extends State<ConfirmAccountScreen> {
       await Provider.of<Auth>(context).getCognitoCredentials();
       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
     } catch (e) {
-      _showErrorDialog(e.message);
+      _showErrorDialog(e.toString());
     }
   }
 

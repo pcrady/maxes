@@ -68,23 +68,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 SizedBox(height: 15.0),
                 AuthTextInput(
-                  hintText: _screenVersion == ForgotScreenVersion.enterEmail
-                      ? 'Email'
-                      : 'Confirmation Code',
+                  hintText: _screenVersion == ForgotScreenVersion.enterEmail ? 'Email' : 'Confirmation Code',
                   faIcon: _screenVersion == ForgotScreenVersion.enterEmail
                       ? FontAwesomeIcons.envelope
                       : FontAwesomeIcons.key,
-                  callback: _screenVersion == ForgotScreenVersion.enterEmail
-                      ? emailCallback
-                      : confirmationCodeCallback,
+                  callback: _screenVersion == ForgotScreenVersion.enterEmail ? emailCallback : confirmationCodeCallback,
                   controller: _controller,
                   keyboardType: _screenVersion == ForgotScreenVersion.enterEmail
                       ? TextInputType.emailAddress
                       : TextInputType.number,
                 ),
-                _screenVersion == ForgotScreenVersion.enterEmail
-                    ? Container()
-                    : SizedBox(height: 15.0),
+                _screenVersion == ForgotScreenVersion.enterEmail ? Container() : SizedBox(height: 15.0),
                 _screenVersion == ForgotScreenVersion.enterEmail
                     ? Container()
                     : AuthTextInput(
@@ -95,9 +89,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                 SizedBox(height: 15.0),
                 AuthButton(
-                  buttonText: _screenVersion == ForgotScreenVersion.enterEmail
-                      ? 'SEND'
-                      : 'RESET PASSWORD',
+                  buttonText: _screenVersion == ForgotScreenVersion.enterEmail ? 'SEND' : 'RESET PASSWORD',
                   buttonColor: kButtonColor,
                   onPressed: () async {
                     if (_screenVersion == ForgotScreenVersion.enterEmail) {
@@ -110,20 +102,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           _screenVersion = ForgotScreenVersion.enterCodeAndPassword;
                         });
                       } catch (e) {
-                        _showErrorDialog(e.message);
+                        _showErrorDialog(e.toString());
                       }
                     } else {
                       try {
                         if (_email == null || _confirmationCode == null || _newPassword == null) return;
                         await Provider.of<Auth>(context).init(email: _email);
-                        await Provider.of<Auth>(context)
-                            .confirmForgotPasswordCode(
-                                _confirmationCode, _newPassword);
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            LoginScreen.routeName,
-                            (Route<dynamic> route) => false);
+                        await Provider.of<Auth>(context).confirmForgotPasswordCode(_confirmationCode, _newPassword);
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil(LoginScreen.routeName, (Route<dynamic> route) => false);
                       } catch (e) {
-                        _showErrorDialog(e.message);
+                        _showErrorDialog(e.toString());
                       }
                     }
                   },
